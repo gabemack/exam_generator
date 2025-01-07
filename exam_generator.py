@@ -14,6 +14,7 @@ class Question:
         self.correct_answers = data['correct_answers']
         self.id = data.get('id', '')
         self._shuffled_indices = None
+        self.verbatim_choices = data.get('verbatim_choices', False)
 
     def shuffle_choices(self):
         """Shuffle the choices"""
@@ -41,7 +42,7 @@ class Question:
     def to_latex(self, shuffle: bool = True) -> str:
         # Convert question to latex format
         latex = f"\\question[{self.points}] {self.text}\n"
-        latex += "\\begin{choices}\n"
+        latex += "\\begin{checkboxes}\n"
 
         if shuffle:
             choices, correct = self.get_shuffled_choices()
@@ -50,20 +51,26 @@ class Question:
             correct = self.correct_answers
 
         for choice in choices:
+            # Verbatim choices (code snippet as an answer)
+            if self.verbatim_choices:
+                choice_text = f"\\begin{{verbatim}}{choice}\\end{{verbatim}}"
+            else:
+                choice_text = choice
+
             if isinstance(correct, list):
                 # Multiple selection
                 if choice in correct:
-                    latex += f"\\correctchoice {choice}\n"
+                    latex += f"\\correctchoice {choice_text}\n"
                 else:
-                    latex += f"\\choice {choice}\n"
+                    latex += f"\\choice {choice_text}\n"
             else:
                 # Multiple choice
                 if choice == correct:
-                    latex += f"\\correctchoice {choice}\n"
+                    latex += f"\\correctchoice {choice_text}\n"
                 else:
-                    latex += f"\\choice {choice}\n"
+                    latex += f"\\choice {choice_text}\n"
 
-        latex += "\\end{choices}\n"
+        latex += "\\end{checkboxes}\n"
         return latex
 
 class QuestionBank:
