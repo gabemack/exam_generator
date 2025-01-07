@@ -4,6 +4,11 @@ Python companion for exam documentclass that creates multiple exam versions from
 
 ## Usage
 
+### Installation
+```bash
+pip install pyyaml
+```
+
 ### Example Usage
 
 ```bash
