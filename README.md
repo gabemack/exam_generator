@@ -54,14 +54,21 @@ questions:
     type: multiple_selection
     points: 3
     text: Which of the following are valid ways to declare a pointer in C?
+    verbatim_choices: true
     choices:
-      - "int* ptr;"
-      - "int *ptr;"
-      - "int (* ptr);"
-      - "ptr* int;"
+      - |
+        int* ptr;
+      - |
+        int *ptr;
+      - |
+        int (* ptr);
+      - |
+        ptr* int;
     correct_answers:
-      - "int* ptr;"
-      - "int *ptr;"
+      - |
+        int* ptr;
+      - |
+        int *ptr;
 ```
 
 #### Configuration File
